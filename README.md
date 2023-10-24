@@ -12,3 +12,46 @@ Thanks to structural pattern matching in Python 3.10, a lot of the code pretty c
 
 This was mainly a learning exercise, with some of the code here possibly making its way into [Chyp](https://github.com/akissinger/chyp) at some point. However, if you find the code useful, feel free to use it.
 
+# Usage
+
+To use the prover, construct a `Proof` object with a goal. Call `Proof.rule` to update the state with a reverse application of one of the following rules:
+
+At any point, printing the proof object will show the open goals. Here's a simple example:
+
+```python
+from folderol import *
+pf = Proof(parse_goal('forall x . Q(x) and P(x) |- forall x . P(x) and Q(x)'))
+print(pf)
+
+pf.rule('allR'); print(pf)
+pf.rule('allL'); print(pf)
+pf.rule('andR'); print(pf)
+pf.rule('andL'); print(pf)
+pf.rule('andL'); print(pf)
+```
+
+
+This will give the following output:
+
+    1 goal:
+      ∀x.(Q(x) ∧ P(x)) ⊢ ∀x.(P(x) ∧ Q(x))
+
+
+    1 goal:
+      ∀x.(Q(x) ∧ P(x)) ⊢ (P(x0) ∧ Q(x0))
+
+
+    1 goal:
+      (Q(?x1) ∧ P(?x1)), ∀x.(Q(x) ∧ P(x)) ⊢ (P(x0) ∧ Q(x0))
+
+
+    2 goals:
+      (Q(?x1) ∧ P(?x1)), ∀x.(Q(x) ∧ P(x)) ⊢ P(x0)
+      (Q(?x1) ∧ P(?x1)), ∀x.(Q(x) ∧ P(x)) ⊢ Q(x0)
+
+
+    1 goal:
+      (Q(x0) ∧ P(x0)), ∀x.(Q(x) ∧ P(x)) ⊢ Q(x0)
+
+
+    qed
