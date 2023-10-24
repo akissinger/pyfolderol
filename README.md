@@ -14,7 +14,8 @@ This was mainly a learning exercise, with some of the code here possibly making 
 
 # Usage
 
-To use the prover, construct a `Proof` object with a goal. Call `Proof.rule` to update the state with a reverse application of one of the following rules:
+To use the prover, construct a `Proof` object with a goal. Call `Proof.rule` to update the state with a reverse application of one of the rules of the sequent calculus [LK](https://en.wikipedia.org/wiki/Sequent_calculus#The_system_LK), using the variant described in Paulson's paper. The rules acting on the left part of the sequent are called `andL`, `orL`, `impliesL`, `iffL`, `allL`, `existsL`, and similarly the rules acting on the right are called `andR`, `orR`, `impliesR`, `iffR`, `allR`, `existsR`.
+
 
 At any point, printing the proof object will show the open goals. Here's a simple example:
 
